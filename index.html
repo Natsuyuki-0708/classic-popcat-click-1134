@@ -84,6 +84,10 @@
 
 <script>
 
+  // 用 javascript 預載張嘴圖片 op.png
+    let img = new Image();
+    img.src = 'imgs/op.png';
+
   // 1. 計數器初始化
     let count = 0;
 
@@ -115,7 +119,37 @@
 
   // 當滑鼠放開，便恢復原來圖片
     p.addEventListener('mouseup', function() {
-      p.id = 'p';
+
+      // 滑鼠放開後，等待 25 毫秒，再切回閉嘴圖片
+      setTimeout(() => {
+        p.id = 'p';
+      }, 25);
+
+    });
+
+  // 除了滑鼠，也可以用鍵盤互動
+    document.addEventListener('keydown', function(event) {
+      // 如果按下空白鍵，就執行 add()，並更新計數器的顯示
+      if (event.code === 'Space') {
+        add();
+        p.innerText = count;
+
+        // 當按下空白鍵，切換張嘴圖片
+        p.id = 'op';
+
+        // 當按下空白鍵，播放 pops/pop1.mp3
+        let audio = new Audio('pops/pop1.mp3');
+        audio.play();
+      }
+    });
+
+  // 空白鍵放開後，等待 25 毫秒，再切回閉嘴圖片
+    document.addEventListener('keyup', function(event) {
+      if (event.code === 'Space') {
+        setTimeout(() => {
+          p.id = 'p';
+        }, 25);
+      }
     });
 
   </script>
